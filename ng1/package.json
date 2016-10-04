@@ -1,0 +1,20 @@
+{
+  "name": "ng1-component-communication",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run lite",
+    "lite": "lite-server"
+  },
+  "author": "Mathis Hofer <hofer@puzzle.ch>",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "milligram": "^1.1.0"
+  },
+  "devDependencies": {
+    "lite-server": "^2.2.2"
+  }
+}
