@@ -1,14 +1,12 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'contacts-toolbar',
   template: `
     <div class="row">
       <div class="column column-100">
-        <button class="button button-outline" (click)="add.emit()">Add</button>
+        <a class="button button-outline" routerLink="/contacts/new">Add</a>
       </div>
     </div>`
 })
-export class ContactsToolbarComponent {
-  @Output() add: EventEmitter<void> = new EventEmitter<void>();
-}
+export class ContactsToolbarComponent {}

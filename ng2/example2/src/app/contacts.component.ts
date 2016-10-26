@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ContactModel } from './contact.model';
+import { ContactsRestService } from './contacts-rest.service';
 import { ContactsService } from './contacts.service';
 
 @Component({
@@ -11,27 +12,34 @@ import { ContactsService } from './contacts.service';
           <h2>Contacts</h2>
         </div>
       </div>
-      <contacts-toolbar (add)="add()"></contacts-toolbar>
-      <contacts-list
-        [contacts]="contacts"
-        (selectContact)="selectContact($event)"></contacts-list>
+      <contacts-toolbar></contacts-toolbar>
+      <contacts-list [contacts]="contacts"></contacts-list>
     </div>
-    <contact-panel *ngIf="selectedContact"
-      [contact]="selectedContact"
-      (saved)="saved($event)"
-      (destroy)="destroy($event)"
-      (close)="selectContact()"></contact-panel>`
+    <router-outlet></router-outlet>
+    <!-- <contact-panel *ngIf="selectedContact"
+       [contact]="selectedContact"
+       (saved)="saved($event)"
+       (destroy)="destroy($event)"
+       (close)="selectContact()"></contact-panel>-->`,
+  providers: [ContactsService]
 })
 export class ContactsComponent {
   contacts: ContactModel[] = [];
   selectedContact: ContactModel;
 
-  constructor(private contactsService: ContactsService) {
+  constructor(private contactsRestService: ContactsRestService,
+              private contactsService: ContactsService) {
     this.loadContacts();
+
+    this.contactsService.saved.subscribe(contact => this.saved(contact));
+    this.contactsService.destroyed.subscribe(contact => this.destroyed(contact));
   }
 
   loadContacts() {
-    this.contactsService.getList().subscribe(contacts => this.contacts = contacts);
+    this.contactsRestService.getList().subscribe(contacts => {
+      this.contacts = contacts;
+      this.contactsService.updateContacts(contacts);
+    });
   }
 
   selectContact(contact?: ContactModel) {
@@ -44,19 +52,12 @@ export class ContactsComponent {
 
   saved(contact: ContactModel) {
     const index = this.contacts.findIndex(c => c.id === contact.id);
-    if (index >= 0) {
-      // this.contacts[index] = contact;
-    } else {
+    if (index === -1) {
       this.contacts.unshift(contact);
     }
   }
 
-  destroy(contact: ContactModel) {
-    this.contactsService.remove(contact.id).subscribe(() => {
-      this.contacts.splice(this.contacts.indexOf(contact), 1);
-      if (contact === this.selectedContact) {
-        this.selectContact()
-      }
-    });
+  destroyed(contact: ContactModel) {
+    this.contacts.splice(this.contacts.indexOf(contact), 1);
   }
 }

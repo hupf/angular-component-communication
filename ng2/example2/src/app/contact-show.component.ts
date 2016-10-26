@@ -4,7 +4,7 @@ import { ContactModel } from './contact.model';
 @Component({
   selector: 'contact-show',
   template: `
-    <div class="container">
+    <div class="container" *ngIf="contact">
       <div class="row">
         <div class="column column-50"><label>First name</label></div>
         <div class="column column-50">{{contact.first_name}}</div>
@@ -21,7 +21,7 @@ import { ContactModel } from './contact.model';
         <div class="column column-100">
           <button (click)="edit.emit()" class="button" type="button">Edit</button>
           <button (click)="destroy.emit()" class="button button-outline" type="button">Delete</button>
-          <button (click)="close.emit()" class="button button-clear" type="button">Close</button>
+          <a routerLink="/contacts" class="button button-clear">Close</a>
         </div>
       </div>
     </div>`
@@ -30,5 +30,4 @@ export class ContactShowComponent {
   @Input() contact: ContactModel;
   @Output() edit: EventEmitter<void> = new EventEmitter<void>();
   @Output() destroy: EventEmitter<void> = new EventEmitter<void>();
-  @Output() close: EventEmitter<void> = new EventEmitter<void>();
 }

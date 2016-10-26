@@ -11,7 +11,7 @@ import { ContactsToolbarComponent } from './contacts-toolbar.component';
 import { ContactPanelComponent } from './contact-panel.component';
 import { ContactShowComponent } from './contact-show.component';
 import { ContactFormComponent } from './contact-form.component';
-import { ContactsService } from './contacts.service';
+import { ContactsRestService } from './contacts-rest.service';
 import { routes } from './app.routes';
 
 @NgModule({
@@ -31,7 +31,7 @@ import { routes } from './app.routes';
     RouterModule.forRoot(routes)
   ],
   providers: [
-    ContactsService
+    ContactsRestService
   ],
   bootstrap: [AppComponent]
 })
