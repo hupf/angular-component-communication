@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { ContactModel } from './contact.model';
 
 @Injectable()
-export class ContactsService {
+export class ContactsRestService {
   baseUrl: string = 'http://localhost:3030/contacts';
 
   constructor(private http: Http) {}

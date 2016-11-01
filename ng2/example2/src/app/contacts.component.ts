@@ -15,12 +15,7 @@ import { ContactsService } from './contacts.service';
       <contacts-toolbar></contacts-toolbar>
       <contacts-list [contacts]="contacts"></contacts-list>
     </div>
-    <router-outlet></router-outlet>
-    <!-- <contact-panel *ngIf="selectedContact"
-       [contact]="selectedContact"
-       (saved)="saved($event)"
-       (destroy)="destroy($event)"
-       (close)="selectContact()"></contact-panel>-->`,
+    <router-outlet></router-outlet>`,
   providers: [ContactsService]
 })
 export class ContactsComponent {

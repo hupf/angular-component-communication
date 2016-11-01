@@ -10,7 +10,7 @@ import { ContactsToolbarComponent } from './contacts-toolbar.component';
 import { ContactPanelComponent } from './contact-panel.component';
 import { ContactShowComponent } from './contact-show.component';
 import { ContactFormComponent } from './contact-form.component';
-import { ContactsService } from './contacts.service';
+import { ContactsRestService } from './contacts-rest.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,7 @@ import { ContactsService } from './contacts.service';
     HttpModule
   ],
   providers: [
-    ContactsService
+    ContactsRestService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactModel } from './contact.model';
 import { ContactsRestService } from './contacts-rest.service';
@@ -16,7 +16,7 @@ import { ContactsService } from './contacts.service';
       (submit)="submit()"
       (cancel)="cancelEdit()"></contact-form>`
 })
-export class ContactPanelComponent /*implements OnInit, OnChanges*/ {
+export class ContactPanelComponent {
   contact: ContactModel;
 
   formModel: ContactModel;
@@ -37,6 +37,9 @@ export class ContactPanelComponent /*implements OnInit, OnChanges*/ {
         .filter(contacts => !!contacts)
         .subscribe(contacts => {
           this.contact = contacts.find(c => c.id.toString() === id);
+          if (this.formModel) {
+            this.startEdit();
+          }
         });
     }
   }

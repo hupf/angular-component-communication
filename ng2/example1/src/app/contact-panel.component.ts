@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { ContactModel } from './contact.model';
-import { ContactsService } from './contacts.service';
+import { ContactsRestService } from './contacts-rest.service';
 
 @Component({
   selector: 'contact-panel',
@@ -8,7 +8,7 @@ import { ContactsService } from './contacts.service';
     <contact-show *ngIf="!formModel"
       [contact]="contact"
       (edit)="startEdit()"
-      (destroy)="destroy.emit(contact)"
+      (destroy)="destroy()"
       (close)="close.emit()"></contact-show>
     <contact-form *ngIf="formModel"
       [contact]="formModel"
@@ -18,12 +18,12 @@ import { ContactsService } from './contacts.service';
 export class ContactPanelComponent implements OnInit, OnChanges {
   @Input() contact: ContactModel;
   @Output() saved: EventEmitter<ContactModel> = new EventEmitter<ContactModel>();
-  @Output() destroy: EventEmitter<ContactModel> = new EventEmitter<ContactModel>();
+  @Output() destroyed: EventEmitter<ContactModel> = new EventEmitter<ContactModel>();
   @Output() close: EventEmitter<void> = new EventEmitter<void>();
 
   formModel: ContactModel;
 
-  constructor(private contactsService: ContactsService) {}
+  constructor(private contactsService: ContactsRestService) {}
 
   ngOnInit() {
     if (this.contact.id == null && !this.formModel) {
@@ -45,7 +45,7 @@ export class ContactPanelComponent implements OnInit, OnChanges {
 
   cancelEdit() {
     this.formModel = undefined;
-    if (this.contact.id == null) {
+    if (this.contact && this.contact.id == null) {
       this.close.emit();
     }
   }
@@ -54,6 +54,12 @@ export class ContactPanelComponent implements OnInit, OnChanges {
     this.contactsService.save(this.formModel, this.contact).subscribe(contact => {
       this.saved.emit(contact);
       this.formModel = undefined;
+    });
+  }
+
+  destroy() {
+    this.contactsService.remove(this.contact.id).subscribe(() => {
+      this.destroyed.emit(this.contact);
     });
   }
 

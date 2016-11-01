@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ContactModel } from './contact.model';
-import { ContactsService } from './contacts.service';
+import { ContactsRestService } from './contacts-rest.service';
 
 @Component({
   selector: 'contacts',
@@ -19,19 +19,21 @@ import { ContactsService } from './contacts.service';
     <contact-panel *ngIf="selectedContact"
       [contact]="selectedContact"
       (saved)="saved($event)"
-      (destroy)="destroy($event)"
+      (destroyed)="destroyed($event)"
       (close)="selectContact()"></contact-panel>`
 })
 export class ContactsComponent {
   contacts: ContactModel[] = [];
   selectedContact: ContactModel;
 
-  constructor(private contactsService: ContactsService) {
+  constructor(private contactsService: ContactsRestService) {
     this.loadContacts();
   }
 
   loadContacts() {
-    this.contactsService.getList().subscribe(contacts => this.contacts = contacts);
+    this.contactsService.getList().subscribe(contacts => {
+      this.contacts = contacts
+    });
   }
 
   selectContact(contact?: ContactModel) {
@@ -44,19 +46,13 @@ export class ContactsComponent {
 
   saved(contact: ContactModel) {
     const index = this.contacts.findIndex(c => c.id === contact.id);
-    if (index >= 0) {
-      // this.contacts[index] = contact;
-    } else {
+    if (index === -1) {
       this.contacts.unshift(contact);
     }
   }
 
-  destroy(contact: ContactModel) {
-    this.contactsService.remove(contact.id).subscribe(() => {
-      this.contacts.splice(this.contacts.indexOf(contact), 1);
-      if (contact === this.selectedContact) {
-        this.selectContact()
-      }
-    });
+  destroyed(contact: ContactModel) {
+    this.contacts.splice(this.contacts.indexOf(contact), 1);
+    this.selectContact();
   }
 }
