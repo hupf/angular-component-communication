@@ -37,14 +37,6 @@ export class ContactsComponent {
     });
   }
 
-  selectContact(contact?: ContactModel) {
-    this.selectedContact = contact;
-  }
-
-  add() {
-    this.selectContact(new ContactModel())
-  }
-
   saved(contact: ContactModel) {
     const index = this.contacts.findIndex(c => c.id === contact.id);
     if (index === -1) {
