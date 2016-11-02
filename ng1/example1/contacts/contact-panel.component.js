@@ -54,14 +54,14 @@
 
     function startEdit() {
       vm.formModel = angular.copy(vm.contact, {});
-    };
+    }
 
     function cancelEdit() {
       vm.formModel = undefined;
       if (vm.contact.id == null) {
         vm.close();
       }
-    };
+    }
 
     function submit() {
       angular.copy(vm.formModel, vm.contact)

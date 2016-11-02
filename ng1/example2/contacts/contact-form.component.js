@@ -4,7 +4,6 @@
   angular
     .module('app')
     .component('contactForm', {
-      require: '^^contacts',
       bindings: {
         contact: '<',
         submit: '&',
@@ -36,10 +35,8 @@
       controllerAs: 'vm'
     });
 
-  ContactFormController.$inject = ['$element'];
+  ContactFormController.$inject = [];
 
   /* @ngInject */
-  function ContactFormController($element) {
-    console.log('$element', $element.controller('contacts'));
-  }
+  function ContactFormController() {}
 })();
