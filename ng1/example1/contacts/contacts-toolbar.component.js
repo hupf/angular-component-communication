@@ -4,10 +4,12 @@
   angular
     .module('app')
     .component('contactsToolbar', {
-      bindings: {},
+      bindings: {
+        add: '&'
+      },
       template: '<div class="row">' +
         '  <div class="column column-100">' +
-        '    <button class="button button-outline" ui-sref="contacts.detail({id: \'new\'})">Add</button>' +
+        '    <button class="button button-outline" ng-click="vm.add()">Add</button>' +
         '  </div>' +
         '</div>',
       controller: ContactsToolbarController,

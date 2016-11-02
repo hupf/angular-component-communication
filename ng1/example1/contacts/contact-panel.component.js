@@ -4,12 +4,18 @@
   angular
     .module('app')
     .component('contactPanel', {
-      bindings: {},
+      bindings: {
+        contact: '<',
+        saved: '&',
+        destroyed: '&',
+        close: '&'
+      },
       template: '' +
       '<contact-show ng-if="!vm.formModel" ' +
       '  contact="vm.contact" ' +
       '  edit="vm.startEdit()" ' +
-      '  destroy="vm.destroy()"></contact-show>' +
+      '  destroy="vm.destroy()" ' +
+      '  close="vm.close()"></contact-show>' +
       '<contact-form ng-if="vm.formModel" ' +
       '  contact="vm.formModel" ' +
       '  submit="vm.submit()" ' +
@@ -18,15 +24,12 @@
       controllerAs: 'vm'
     });
 
-  ContactPanelController.$inject = ['$scope', '$stateParams', '$state', 'contactsService',
-    'contactsStateService'];
+  ContactPanelController.$inject = ['$scope'];
 
   /* @ngInject */
-  function ContactPanelController($scope, $stateParams, $state, contactsService,
-                                  contactsStateService) {
+  function ContactPanelController($scope) {
     var vm = this;
 
-    vm.contact = undefined;
     vm.formModel = undefined;
 
     vm.startEdit = startEdit;
@@ -39,37 +42,26 @@
     return;
 
     function activate() {
-      loadContact($stateParams.id);
+      initFormModel();
+      $scope.$watch('vm.contact', initFormModel);
     }
 
-    function loadContact(id) {
-      if (id === 'new') {
-        vm.contact = new contactsService();
+    function initFormModel() {
+      if (vm.contact.id == null || vm.formModel) {
         startEdit();
-      } else {
-        contactsStateService.getContact(id).then(function(contact) {
-          vm.contact = contact;
-          if (vm.formModel) {
-            startEdit();
-          }
-        });
       }
     }
 
     function startEdit() {
       vm.formModel = angular.copy(vm.contact, {});
-    }
+    };
 
     function cancelEdit() {
       vm.formModel = undefined;
       if (vm.contact.id == null) {
-        closePanel();
+        vm.close();
       }
-    }
-
-    function closePanel() {
-      $state.go('contacts');
-    }
+    };
 
     function submit() {
       angular.copy(vm.formModel, vm.contact)
@@ -81,15 +73,14 @@
         promise = vm.contact.$update();
       }
       promise.then(function(contact) {
-        $scope.$emit('contacts:saved', contact);
+        vm.saved({$contact: contact});
         vm.formModel = undefined;
       });
     }
 
     function destroy() {
       vm.contact.$delete().then(function () {
-        closePanel();
-        $scope.$emit('contacts:destroyed', vm.contact);
+        vm.destroyed({$contact: vm.contact});
       });
     }
   }

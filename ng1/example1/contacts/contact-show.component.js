@@ -7,7 +7,8 @@
       bindings: {
         contact: '<',
         edit: '&',
-        destroy: '&'
+        destroy: '&',
+        close: '&'
       },
       template: '<div class="container">' +
       '  <div class="row">' +
@@ -26,7 +27,7 @@
       '    <div class="column column-100">' +
       '      <button ng-click="vm.edit()" class="button" type="button">Edit</button>' +
       '      <button ng-click="vm.destroy()" class="button button-outline" type="button">Delete</button>' +
-      '      <button ui-sref="contacts" class="button button-clear" type="button">Close</button>' +
+      '      <button ng-click="vm.close()" class="button button-clear" type="button">Close</button>' +
       '    </div>' +
       '  </div>' +
       '</div>',

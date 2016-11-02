@@ -12,6 +12,12 @@ contact-panel {
   box-shadow: -3px 0px 5px 0px rgba(0,0,0,0.3);
 }
 
-tr[ng-click] {
+tr[ng-click],
+a {
   cursor: pointer;
+}
+
+td > a {
+  display: block;
+  color: #606c76;
 }

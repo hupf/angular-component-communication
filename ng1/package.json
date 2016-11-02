@@ -1,6 +1,6 @@
 {
   "name": "ng1-component-communication",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,10 +10,11 @@
     "api": "json-server contacts.js --port 3030"
   },
   "author": "Mathis Hofer <hofer@puzzle.ch>",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "angular": "^1.5.8",
     "angular-resource": "^1.5.8",
+    "angular-ui-router": "^0.3.1",
     "milligram": "^1.1.0"
   },
   "devDependencies": {

@@ -2,5 +2,5 @@
   'use strict';
 
   angular
-    .module('app', ['ngResource']);
+    .module('app', ['ngResource', 'ui.router']);
 })();

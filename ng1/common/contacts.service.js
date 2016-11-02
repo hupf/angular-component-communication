@@ -9,6 +9,9 @@
 
   /* @ngInject */
   function contactsService($resource) {
-    return $resource('http://localhost:3030/contacts/:id',  { id: '@id' });
+    return $resource('http://localhost:3030/contacts/:id',
+      { id: '@id' },
+      { 'update': { method: 'PUT' } }
+    );
   }
 })();

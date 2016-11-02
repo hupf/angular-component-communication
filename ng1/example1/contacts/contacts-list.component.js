@@ -5,15 +5,16 @@
     .module('app')
     .component('contactsList', {
       bindings: {
-        contacts: '<'
+        contacts: '<',
+        selectContact: '&'
       },
       template: '<table>' +
       '<thead><tr><th>First name</th><th>Last name</th><th>Phone</th></tr></thead>' +
       '<tbody>' +
-      '<tr ng-repeat="contact in vm.contacts">' +
-      '<td><a ui-sref="contacts.detail({id: contact.id})">{{contact.first_name}}</a></td>' +
-      '<td><a ui-sref="contacts.detail({id: contact.id})">{{contact.last_name}}</a></td>' +
-      '<td><a ui-sref="contacts.detail({id: contact.id})">{{contact.phone}}</a></td>' +
+      '<tr ng-repeat="contact in vm.contacts" ng-click="vm.selectContact({$contact: contact})">' +
+      '<td>{{contact.first_name}}</td>' +
+      '<td>{{contact.last_name}}</td>' +
+      '<td>{{contact.phone}}</td>' +
       '</tr>' +
       '</tbody>' +
       '</table>',
