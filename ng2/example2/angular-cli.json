@@ -18,7 +18,7 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "../node_modules/milligram/node_modules/normalize.css/normalize.css",
+        "../node_modules/normalize.css/normalize.css",
         "../node_modules/milligram/dist/milligram.min.css",
         "styles.css"
       ],
